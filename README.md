@@ -26,17 +26,30 @@ I detail what I gather about the protocol in protocol_info and feel free to use 
 After even more fiddling about I have assembled useful functionality to change the lightbulb color and brightness in change\_color.sh and to change the "temperature" (yellowy white LED) and brightness in change\_temp.sh. I also assemble the turn on script in ``on.sh`` and turn off light script in ``off.sh``
 
 ### USAGE
-To use this, you will need to first identify the MAC address of your bulb:
+To use this, you will need to first identify the MAC address and name of your bulb:
 ```
 hcitool lescan
 ```
-And copy this MAC address somewhere. Then, you will need to extract two numbers calculated from your MAC address. You will probably need to fetch some packets off your phone app communicating with the light and find the ones with attr 0x0012 after opening the capture file in wireshark. Get the hex stream payload and put it in a file similar to a .command file in ``commands/`` - after running ``inspectpacket.py``, you will get something like:
+
+You will get something like:
 
 ```
-[ (random number), 161, (first number), (second number), ... ]
+$ sudo hcitool lescan
+LE Scan ...
+44:A6:E5:01:57:CF (unknown)
+44:A6:E5:01:57:CF M129617E98C33A86E7
 ```
 
-You should get two numbers, each on a separate line. Next, insert these numbers into all of the files.
+The bit with the colons is the MAC address which you will need (`44:A6:E5:01:57:CF`) and the bit starting with the M is the device name, which you will need to calculate values from.
+
+You can use `getid.py` to calculate the two numbers you will need. For example:
+```
+$ ./getid.py M129617E98C33A86E7
+BULB_ID1=18
+BULB_ID2=150
+```
+
+Next, you can insert these numbers into all of the files by executing the commands below (replacing the $BULB_ID1, $BULB_ID2, $BULB_MAC with the values you obtained)
 
 ```
 find . -name "*" -exec sed -ri 's/\$BULB_ID1/(first number here)/g' {} ';'
@@ -82,6 +95,8 @@ And turn it yellowy:
 ```
 ./change_temp.sh 1 100
 ```
+
+Let me know if it works for you!
 
 ## The end
 I have also integrated this into my home automation system based on my raspberry pi so that I can control the lightbulb over wifi rather than bluetooth. Who needs silly dedicated wifi bridges anyway?
