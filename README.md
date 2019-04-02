@@ -16,7 +16,7 @@ I still had no idea what the packet protocol was at this point. You can do this 
 You can see the commands I collected at this stage in the ``commands/`` folder.
 
 ### Investigating the protocol
-I disassembled the apk and looked through the functions that sent data over Bluetooth (LE, only in 4.0+) and reconstructed the batshit crazy obfuscation algorithm both in forward (``createpacket.py``) and in reverse (``inspectpacket.py``) to investigate the actual protocol structure.
+I disassembled the apk and looked through the functions that sent data over Bluetooth (LE, only in 4.0+) and reconstructed the crazy obfuscation algorithm both in forward (``createpacket.py``) and in reverse (``inspectpacket.py``) to investigate the actual protocol structure.
 
 It appears that the first byte is a RANDOM NUMBER that is used as a key. The next ten bytes appear to be used as the payload, xor'd with the key and with various constants added on for some reason. Then there is a calculated checksum in the 12th byte.
 
