@@ -1,6 +1,8 @@
 # Reverse Engineered MiLight Bluetooth
 Control a £20 bluetooth lightbulb from your linux computer/RPi for fun and profit!
 
+For a [home assistant](https://www.home-assistant.io/) plugin that can do this see [homeassistant-milight-bluetooth](https://github.com/souramoo/homeassistant-milight-bluetooth)
+
 ## The Story
 So I thought it would be cool to have wirelessly controlled lightbulbs in my room. Phillips Hue is /expensive/, especiallt for a poor student like me. Thanks to the magical realm of eBay, I found a cheap chinese unbranded(?) bluetooth-controlled lightbulb for £20. I bought it and installed it. After fiddling around with E27 to bayonet adapters, it was connected!
 
